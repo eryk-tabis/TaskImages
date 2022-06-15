@@ -30,10 +30,8 @@ class Image(models.Model):
             img_format = self.image.path.split('.')[-1]  # getting image format
             thumbnail_path = self.image.path.replace(f'.{img_format}',
                                                      f'_{size.size}.{img_format}')  # creating thumbnail path
-            img.save(thumbnail_path)  # saving image in different size
             ImageSizes.objects.create(image=self,
-                                      thumbnail=self.image.url.replace(f'.{img_format}',
-                                                                       f'_{size.size}.{img_format}'),
+                                      thumbnail=img.save(thumbnail_path),
                                       height=img.height)  # creating ImageSizes object
 
 
