@@ -14,7 +14,7 @@ class ImageSerializer(serializers.ModelSerializer):
     thumbnails = ImageSizesSerializer(many=True, read_only=True, source='image_sizes')
     image = serializers.ImageField()
     image_expiring = serializers.SerializerMethodField(read_only=True)
-    expiring_time = serializers.IntegerField()
+    expiring_time = serializers.IntegerField(required=False)
 
     class Meta:
         model = Image
