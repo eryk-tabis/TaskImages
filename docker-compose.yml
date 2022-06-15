@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ./data/db:/root/db
+    environment:
+      - SQLITE3_DB=db.sqlite3
+  web:
+    image: taskimages
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - migration
+      - seed
+  migration:
+    build: .
+    image: taskimages
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    links:
+      - db
+    depends_on:
+      - db
+  seed:
+    image: taskimages
+    command: python manage.py loaddata seed.json
+    volumes:
+      - .:/code
+    links:
+      - db
+      - migration
