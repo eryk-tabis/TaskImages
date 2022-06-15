@@ -6,7 +6,7 @@ class User(AbstractUser):
     """
     Properties for User model
     """
-    tier = models.ForeignKey('Tier', on_delete=models.SET_NULL, null=True, blank=True)
+    tier = models.ForeignKey('Tier', on_delete=models.SET_NULL, null=True, blank=False)
 
 
 class Tier(models.Model):
